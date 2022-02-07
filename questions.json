@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Why we use <br> element ?",
+        "answer_1": "To make text italic", 
+        "answer_2": "To add horizontal line", 
+        "answer_3": "To add breakline", 
+        "answer_4": "To make text bold",
+        "right_answer": "To add breakline" 
+    },
+    {
+        "title": "Why we use <hr> element ?",
+        "answer_1": "To make text italic", 
+        "answer_2": "To add horizontal line", 
+        "answer_3": "To add breakline", 
+        "answer_4": "To make text bold",
+        "right_answer": "To add horizontal line" 
+    },
+    {
+        "title": "Is <img> element has attribute href ?",
+        "answer_1": "All elements has this attribute", 
+        "answer_2": "yes", 
+        "answer_3": "No, it's for Anchor tag <a>", 
+        "answer_4": "Answer 1 & 2 is right",
+        "right_answer": "No, it's for Anchor tag <a>" 
+    },
+    {
+        "title": "How can we make element text bold ?",
+        "answer_1": "Putting it inside <b> tag", 
+        "answer_2": "Putting it inside <strong> tag", 
+        "answer_3": "Customizing it with Font-weight property in Css", 
+        "answer_4": "All of this answers is right",
+        "right_answer": "All of this answers is right" 
+    },
+    {
+        "title": "How can we make element text italic ?",
+        "answer_1": "Putting it inside <i> tag", 
+        "answer_2": "Putting it inside <strong> tag", 
+        "answer_3": "Customizing it with Font-weight property in Css", 
+        "answer_4": "All of this answers is right",
+        "right_answer": "Putting it inside <i> tag" 
+    }
+]
