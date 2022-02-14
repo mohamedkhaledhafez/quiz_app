@@ -3,10 +3,13 @@ let countSpan = document.querySelector(".quiz-app .count span");
 let bullets_Spans_Container = document.querySelector(
   ".bullets .spans-container"
 );
-// Set Options For Questions Number
-let currentIndex = 0;
 let quizArea = document.querySelector(".quiz-app .quiz-area");
 let quizAnswers = document.querySelector(".quiz-app .answers-area");
+let submitBtn = document.querySelector(".quiz-app .submit-btn");
+
+// Set Options For Questions Number
+let currentIndex = 0;
+let rightAnswers = 0;
 
 function getQuestions() {
   let myRequest = new XMLHttpRequest();
@@ -16,13 +19,32 @@ function getQuestions() {
       //   console.log(this.responseText);
       let questionObject = JSON.parse(this.responseText);
       let questionsCount = questionObject.length;
-      console.log(questionsCount);
+      // console.log(questionsCount);
 
       // Create Bullets and Set Questions Count
       createBullets(questionsCount);
 
       // Create Function To Add Questions To UI
       addQuestions(questionObject[currentIndex], questionsCount);
+
+      // Click on submit button
+      submitBtn.onclick = () => {
+        // Get the right answer
+        let rightAnswer = questionObject[currentIndex].right_answer;
+
+        // Increase Index
+        currentIndex++;
+
+        // Check The Answer
+        checkAnswer(rightAnswer, questionsCount);
+
+        // Delete Previous Question & Answers
+        quizArea.innerHTML = "";
+        quizAnswers.innerHTML = "";
+
+        // Show The Next Question
+        addQuestions(questionObject[currentIndex], questionsCount);
+      };
     }
   };
 
@@ -104,5 +126,28 @@ function addQuestions(obj, count) {
 
     // Add This Radio Inputs To Answers Area
     quizAnswers.appendChild(answerDiv);
+  }
+}
+
+function checkAnswer(rightAnswer, count) {
+  let answers = document.getElementsByName("question");
+
+  let chosenAnswer;
+
+  // Search for all answers
+  for (i = 0; i < answers.length; i++) {
+    if (answers[i].checked) {
+      chosenAnswer = answers[i].dataset.answer;
+    }
+  }
+
+  // console.log(`The Chosen Answer is : ${chosenAnswer}`);
+  // console.log(`The Right Answer is : ${rightAnswer}`);
+
+  // If the chosen answer is equal to the right answer : rightAnswers++
+  if (rightAnswer === chosenAnswer) {
+    rightAnswers++;
+    // console.log("good answer");
+    // console.log(rightAnswers);
   }
 }
