@@ -8,11 +8,13 @@ let quizArea = document.querySelector(".quiz-app .quiz-area");
 let quizAnswers = document.querySelector(".quiz-app .answers-area");
 let submitBtn = document.querySelector(".quiz-app .submit-btn");
 let resultsContainer = document.querySelector(".quiz-app .results");
+let countDownSpan = document.querySelector(".quiz-app .countdown");
 
 // Set Options For Questions Number
 let currentIndex = 0;
 let rightAnswers = 0;
-
+let countDownInterval;
+let countDownSeconds = 10;
 function getQuestions() {
   let myRequest = new XMLHttpRequest();
 
@@ -28,6 +30,9 @@ function getQuestions() {
 
       // Create Function To Add Questions To UI
       addQuestions(questionObject[currentIndex], questionsCount);
+
+      // CountDown Function
+      countDown(countDownSeconds, questionsCount);
 
       // Click on submit button
       submitBtn.onclick = () => {
@@ -49,6 +54,10 @@ function getQuestions() {
 
         // Handle Bullets
         handleBullets();
+
+        // CountDown Function
+        clearInterval(countDownInterval);
+        countDown(countDownSeconds, questionsCount);
 
         // show Results
         showResults(questionsCount);
@@ -181,16 +190,39 @@ function showResults(count) {
     bullets.remove();
 
     if (rightAnswers > count / 2 && rightAnswers < count) {
-      theResults = `<span class="good">Good</span>`;
+      theResults = `<span class="good">Good</span>, ${rightAnswers} From ${count}`;
     } else if (rightAnswers === count) {
-      theResults = `<span class="perfect">Perfect</span>`;
+      theResults = `<span class="perfect">Perfect</span>, ${rightAnswers} From ${count}`;
     } else {
-      theResults = `<span class="bad">Bad</span>`;
+      theResults = `<span class="bad">Bad</span>, ${rightAnswers} From ${count}`;
     }
 
     resultsContainer.innerHTML = theResults;
     resultsContainer.style.padding = "10px";
     resultsContainer.style.backgroundColor = "#fff";
     resultsContainer.style.marginTop = "10px";
+  }
+}
+
+// CountDown Function
+function countDown(duration, count) {
+  if (currentIndex < count) {
+    let minutes, seconds;
+    countDownInterval = setInterval(function () {
+      minutes = parseInt(duration / 60);
+      seconds = parseInt(duration % 60);
+
+      minutes = minutes < 10 ? `0${minutes}` : minutes;
+      seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+      countDownSpan.innerHTML = `${minutes} : ${seconds}`;
+
+      if (--duration < 0) {
+        clearInterval(countDownInterval);
+
+        submitBtn.click();
+        // console.log("finished");
+      }
+    }, 1000);
   }
 }
