@@ -117,6 +117,18 @@ body {
   background-color: #0075ff;
 }
 
+.quiz-app .bullets .spans-container span.green {
+  background-color: #0f0;
+}
+
+.rightAns {
+  background-color: #0f0;
+}
+
+.wrongAns {
+  background-color: #f00;
+}
+
 .quiz-app .results span {
   font-weight: bold;
 }
@@ -126,7 +138,7 @@ body {
 }
 
 .quiz-app .results span.good {
-  color: #009688;
+  color: #009620;
 }
 
 .quiz-app .results span.perfect {

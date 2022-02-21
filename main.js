@@ -4,6 +4,9 @@ let bullets = document.querySelector(".quiz-app .bullets");
 let bullets_Spans_Container = document.querySelector(
   ".quiz-app .bullets .spans-container"
 );
+let bulletSpan = document.querySelector(
+  ".quiz-app .bullets .spans-container span"
+);
 let quizArea = document.querySelector(".quiz-app .quiz-area");
 let quizAnswers = document.querySelector(".quiz-app .answers-area");
 let submitBtn = document.querySelector(".quiz-app .submit-btn");
@@ -14,7 +17,8 @@ let countDownSpan = document.querySelector(".quiz-app .countdown");
 let currentIndex = 0;
 let rightAnswers = 0;
 let countDownInterval;
-let countDownSeconds = 10;
+let countDownSeconds = 1000;
+
 function getQuestions() {
   let myRequest = new XMLHttpRequest();
 
@@ -43,7 +47,7 @@ function getQuestions() {
         currentIndex++;
 
         // Check The Answer
-        checkAnswer(rightAnswer, questionsCount);
+        checkAnswer(rightAnswer, questionsCount, currentIndex);
 
         // Delete Previous Question & Answers
         quizArea.innerHTML = "";
@@ -78,6 +82,9 @@ function createBullets(num) {
   for (i = 0; i < num; i++) {
     // Create bullet:
     let theBullet = document.createElement("span");
+
+    // Create id to each bullet to fitch it and controll it:
+    theBullet.setAttribute("id", `bullet_${i + 1}`);
 
     // Append bullet to spans container:
     bullets_Spans_Container.appendChild(theBullet);
@@ -148,6 +155,16 @@ function addQuestions(obj, count) {
   }
 }
 
+function handleBullets() {
+  let bulletsSpan = document.querySelectorAll(".bullets .spans-container span");
+  let arrayOfSpans = Array.from(bulletsSpan);
+  arrayOfSpans.forEach((span, index) => {
+    if (currentIndex === index) {
+      span.className = "on";
+    }
+  });
+}
+
 function checkAnswer(rightAnswer, count) {
   let answers = document.getElementsByName("question");
 
@@ -160,25 +177,17 @@ function checkAnswer(rightAnswer, count) {
     }
   }
 
-  // console.log(`The Chosen Answer is : ${chosenAnswer}`);
-  // console.log(`The Right Answer is : ${rightAnswer}`);
+  let currentBulletElement;
 
   // If the chosen answer is equal to the right answer : rightAnswers++
   if (rightAnswer === chosenAnswer) {
     rightAnswers++;
-    // console.log("good answer");
-    // console.log(rightAnswers);
+    currentBulletElement = document.getElementById(`bullet_${currentIndex}`);
+    currentBulletElement.style.backgroundColor = "#0f0";
+  } else {
+    currentBulletElement = document.getElementById(`bullet_${currentIndex}`);
+    currentBulletElement.style.backgroundColor = "#f00";
   }
-}
-
-function handleBullets() {
-  let bulletsSpan = document.querySelectorAll(".bullets .spans-container span");
-  let arrayOfSpans = Array.from(bulletsSpan);
-  arrayOfSpans.forEach((span, index) => {
-    if (currentIndex === index) {
-      span.className = "on";
-    }
-  });
 }
 
 function showResults(count) {
